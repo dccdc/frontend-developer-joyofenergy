@@ -1,0 +1,29 @@
+
+  .charts-bottom {
+    margin-top: 2.5rem;
+    display: flex;
+  }
+  
+  .charts-bottom > .item {
+    margin-right: 2rem;
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: rgb(245, 245, 245);
+  }
+  .charts-bottom > .item:last-child {
+    margin-right: 0;
+  }
+  
+  .charts-bottom > .item p{
+    font-size: 0.875rem;
+    color: rgb(109, 109, 109);
+  } 
+  .charts-bottom > .item .title{
+    font-weight: bold;
+  } 
+  .charts-bottom > .item .metric{
+    font-size: 1.25rem;
+  } 
+  
+  
