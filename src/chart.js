@@ -14,7 +14,15 @@ export const formatDateLabel = (timestamp) => {
   return `${formatPart(day)}/${formatPart(month + 1)}`;
 };
 
-export const renderChart = (readings) => {
+export const formatHourLabel = (timestamp) => {
+  const date = new Date(timestamp);
+  const hour = date.getHours() + '';
+  const minute = date.getMinutes() + '';
+
+  return `${hour.padStart(2, 0)} : ${minute.padStart(2, 0)}`;
+};
+
+export const renderChart = (readings, type = 'day') => {
   chartJs.Chart.defaults.font.size = "10px";
 
   chartJs.Chart.register.apply(
@@ -22,7 +30,12 @@ export const renderChart = (readings) => {
     Object.values(chartJs).filter((chartClass) => chartClass.id)
   );
 
-  const labels = readings.map(({ time }) => formatDateLabel(time));
+  let labels;
+  if (type === 'hour') {
+    labels = readings.map(({ time }) => formatHourLabel(time))
+  } else {
+    labels = readings.map(({ time }) => formatDateLabel(time));
+  }
   const values = readings.map(({ value }) => value);
 
   const data = {

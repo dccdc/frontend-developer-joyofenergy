@@ -10,21 +10,31 @@ function App() {
     const [totalCost, setTotalCost] = useState(0);
     const [footprint, setFootprint] = useState(0);
 
-    useEffect(async () => {
+    useEffect(() => {
+        renderDayChart();
+    }, []);
+
+    async function renderDayChart() {
         const readings = await getReadings();
         const totalPowerList = sortByTime(groupByDay(readings)).slice(-30);
-        const totalConsumption = getTotalConsumption(totalPowerList);
+        updateCard(totalPowerList);
+        renderChart(totalPowerList);
+    }
+    async function renderHourChart() {
+        const readings = await getReadings();
+        const totalPowerList = sortByTime(readings.slice(0, 25));
+        updateCard(totalPowerList);
+        renderChart(totalPowerList, 'hour')
+    }
+
+    function updateCard(list) {
+        const totalConsumption = getTotalConsumption(list);
         const totalCost = totalConsumption * 0.138;
         const footprint = totalConsumption * 0.0002532;
-
         setTotalConsumption(totalConsumption.toFixed(0));
         setTotalCost(totalCost.toFixed(0));
         setFootprint(footprint.toFixed(4));
-
-        renderChart(totalPowerList);
-    }, []);
-
-
+    }
 
     function getTotalConsumption(list) {
         return list.reduce((total, { value }) => {
@@ -100,8 +110,28 @@ function App() {
               white
               bold
             "
+                            onClick={renderDayChart}
                         >
                             Last 30 days
+                        </button>
+                        <button
+                            className="
+              h5
+              inline-block
+              shadow-2
+              pl2
+              pr2
+              pt1
+              pb1
+              roundedMore
+              border-grey
+              bg-blue
+              white
+              bold
+            "
+                            onClick={renderHourChart}
+                        >
+                            Last 24 hours
                         </button>
                     </section>
                     <section className="chartHeight mb3">
