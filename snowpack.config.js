@@ -8,7 +8,7 @@ module.exports = {
     * 如下面的public文件夹，访问任意未配置的任意路径时都会跳到public目录中
     * src： 这时能通过 http://localhost:8080/dist/App.js 访问
     * 
-    * ！！！ 配置后的目录才会打包且能访问到
+    * ！！！ 配置后的目录才会映射到浏览器中
     */
     src: { url: '/dist' },
     public: { url: '/', static: true }
